@@ -1,3 +1,6 @@
+import userData from '../fixtures/userData.json'
+
+
 describe('Orange Hrm test', () => {
 
   const  selectorList = {
@@ -5,21 +8,54 @@ describe('Orange Hrm test', () => {
     passwordField:"[name='password']",
     loginButton:"[type='submit']",
     sectionTitleTopBar:".oxd-topbar-header-breadcrumb-module",
+    dashboardGrid:".orangehrm-dashboard-grid",
     wrongCredentialAlert:".oxd-alert"
 
   }
 
+  // const userData = {
+  //   userSuccess:{
+  //     username: 'Admin',
+  //     password: 'admin123'
+  //   },
+  //   userFail:{
+  //     username: 'teste',
+  //     password: 'teste'
+  //   }
+  // }
+
   it('login - sucess', () => {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    // Seletor diferente afim de não deixar o script flake
+    cy.get(selectorList.userameField).type(userData.userSuccess.username)
+    cy.get(selectorList.passwordField).type(userData.userSuccess.password)
+    cy.get(selectorList.loginButton).click()
+    cy.location('pathname').should('equal','/web/index.php/dashboard/index')
+    cy.get(selectorList.dashboardGrid)
+  })
+  it('login - fail', () => {
+    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
+    // Seletores copiados diretamente do cypress
+    cy.get(selectorList.userameField).type(userData.userFail.username)
+    cy.get(selectorList.passwordField).type(userData.userFail.password)
+    cy.get(selectorList.loginButton).click()
+    cy.get('.oxd-alert')
+  })
+
+  it.skip('login - sucess', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
     // Utilzando seletor como variavel, melhor forma de utilizar
     cy.get(selectorList.userameField).type('Admin')
     cy.get(selectorList.passwordField).type('admin123')
     cy.get(selectorList.loginButton).click()
     cy.location('pathname').should('equal','/web/index.php/dashboard/index')
-    cy.get(selectorList.sectionTitleTopBar).contains('Dashboard')
+    // Seletor contendo palavra chave
+    // cy.get(selectorList.sectionTitleTopBar).contains('Dashboard')
+    // Seletor contendo um container
+    cy.get(selectorList.dashboardGrid)
   })
 
-  it('login - fail', () => {
+  it.skip('login - fail', () => {
     cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
     // Seletores copiados diretamente do cypress
     cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type('Test')
