@@ -1,1 +1,1 @@
-# Automação de teste de login utilizando Cypress
+# Automação de teste de login utilizando Cypress, projeto de estudo, por isso há várias formas de ser executado com a finalizade de deixar registrado
