@@ -1,0 +1,1 @@
+# Automação de teste de login utilizando Cypress
