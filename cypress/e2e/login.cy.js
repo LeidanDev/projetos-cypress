@@ -9,7 +9,14 @@ describe('Orange Hrm test', () => {
     loginButton:"[type='submit']",
     sectionTitleTopBar:".oxd-topbar-header-breadcrumb-module",
     dashboardGrid:".orangehrm-dashboard-grid",
-    wrongCredentialAlert:".oxd-alert"
+    wrongCredentialAlert:".oxd-alert",
+    myInfoButton: '[href="/web/index.php/pim/viewMyDetails"]',
+    firstNameField: "[name='firstName']",
+    lastNameField: "[name='lastName']",
+    genericField: ".oxd-input--active",
+    datefield: "[placeholder='yyyy-mm-dd']",
+    dataCloseButton: ".--close",
+    submitButton: "[type='submit']"
 
   }
 
@@ -24,7 +31,7 @@ describe('Orange Hrm test', () => {
   //   }
   // }
 
-  it('login - sucess', () => {
+  it.only('user info update - sucess', () => {
     cy.visit('/auth/login')
     // Seletor diferente afim de não deixar o script flake
     cy.get(selectorList.userameField).type(userData.userSuccess.username)
@@ -32,6 +39,18 @@ describe('Orange Hrm test', () => {
     cy.get(selectorList.loginButton).click()
     cy.location('pathname').should('equal','/web/index.php/dashboard/index')
     cy.get(selectorList.dashboardGrid)
+    cy.get(selectorList.myInfoButton).click()
+    cy.get(selectorList.firstNameField).clear().type('FirstNameTeste')
+    cy.get(selectorList.lastNameField).clear().type('lastnameTest')
+    cy.get(selectorList.genericField).eq(3).clear().type('EmploeTest')
+    cy.get(selectorList.genericField).eq(4).clear().type('OtherIdTeste')
+    cy.get(selectorList.genericField).eq(5).clear().type('54786245')
+    cy.get(selectorList.genericField).eq(6).clear( ).type('2025-03-12')
+    cy.get(selectorList.dataCloseButton).click()
+    cy.get(selectorList.submitButton).eq(1).click()
+    cy.get('body').should('contain', 'Successfully Saved')
+    
+
   })
   it('login - fail', () => {
     cy.visit('/auth/login')
