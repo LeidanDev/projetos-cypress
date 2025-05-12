@@ -17,7 +17,7 @@ jobs:
           build: 'npm run build'
 
       - name: Upload de artefatos (Cypress)
-        uses: actions/upload-artifact@v3
+        uses: ./.github/actions/upload-artifact
         if: always()
         with:
           name: Cypress Results
