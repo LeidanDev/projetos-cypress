@@ -10,20 +10,14 @@ jobs:
       - name: Checkout repositório
         uses: actions/checkout@v3
 
-      - name: Instalar dependências
-        run: npm install
-
-      - name: Rodar Cypress
+      - name: Cypress Test
         uses: cypress-io/github-action@v5
         with:
-          start: npm run dev
-          build: npm run build
-          wait-on: 'https://github.com/actions/upload-artifact.git'
-          wait-on-timeout: 60
+          start: 'npm run dev'
+          build: 'npm run build'
 
       - name: Upload de artefatos (Cypress)
-        uses: actions/upload-artifact@3fba4c40e4e76c389fa9b6c5a0a09e73c579cd4c
-
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: Cypress Results
