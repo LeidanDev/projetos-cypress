@@ -5,17 +5,23 @@ on: [push]
 jobs:
   build-test:
     runs-on: ubuntu-22.04
+
     steps:
-      - name: Checkout
+      - name: Checkout repositório
         uses: actions/checkout@v3
 
-      - name: Cypress Tests
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Rodar Cypress
         uses: cypress-io/github-action@v5
         with:
-          start: 'npm run dev'
-          build: 'npm run build'
+          start: npm run dev
+          build: npm run build
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 60
 
-      - name: Upload Cypress Results
+      - name: Upload de artefatos (Cypress)
         uses: actions/upload-artifact@v3
         if: always()
         with:
