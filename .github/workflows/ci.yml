@@ -18,7 +18,7 @@ jobs:
         with:
           start: npm run dev
           build: npm run build
-          wait-on: 'https://opensource-demo.orangehrmlive.com/web/index.php'
+          wait-on: 'https://github.com/actions/upload-artifact.git'
           wait-on-timeout: 60
 
       - name: Upload de artefatos (Cypress)
