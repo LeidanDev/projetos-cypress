@@ -18,7 +18,7 @@ jobs:
         with:
           start: npm run dev
           build: npm run build
-          wait-on: 'http://localhost:3000'
+          wait-on: 'https://opensource-demo.orangehrmlive.com/web/index.php'
           wait-on-timeout: 60
 
       - name: Upload de artefatos (Cypress)
